@@ -49,12 +49,12 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
-                  <p className="text-white font-semibold">your.email@example.com</p>
+                  <p className="text-white font-semibold">sonumehtaskr@gmail.com</p>
                 </div>
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/sonumehtaskr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 bg-slate-800/50 backdrop-blur-sm rounded-xl hover:bg-slate-700/50 transition-all duration-300 border border-slate-700 hover:border-blue-600/50 group"
@@ -69,7 +69,7 @@ const Contact = () => {
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/sonumehtaskr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 bg-slate-800/50 backdrop-blur-sm rounded-xl hover:bg-slate-700/50 transition-all duration-300 border border-slate-700 hover:border-purple-600/50 group"

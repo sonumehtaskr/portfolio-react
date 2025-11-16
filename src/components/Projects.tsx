@@ -12,8 +12,8 @@ const Projects = () => {
         'Online user status tracking and global state management with Zustand',
       ],
       technologies: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Socket.io', 'TailwindCSS', 'DaisyUI', 'JWT', 'Zustand'],
-      link: '#',
-      github: '#',
+      link: 'https://realtime-chat-app-eight-psi.vercel.app/',
+      github: 'https://github.com/sonumehtaskr/realtime-chat-app',
     },
     {
       title: 'Sharma Patient Care Website',
@@ -25,8 +25,8 @@ const Projects = () => {
         'Back-end powered by Node.js to handle form submissions and email notifications',
       ],
       technologies: ['React', 'Node.js', 'Tailwind CSS', 'Express.js'],
-      link: '#',
-      github: '#',
+      link: 'https://sharmapatientcare.com/',
+      github: 'https://github.com/sonumehtaskr/sharmapatientcare',
     },
   ];
 
