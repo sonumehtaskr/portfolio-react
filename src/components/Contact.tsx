@@ -32,10 +32,11 @@ const Contact = () => {
     // Submit form data and reCAPTCHA token to your backend
     const response = await fetch(import.meta.env.VITE_FORM_SUBMISSION_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      redirect: "follow",
       body: JSON.stringify({ "g-recaptcha-response": token, ...formData }),
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
     });
 
     const data = await response.json();
