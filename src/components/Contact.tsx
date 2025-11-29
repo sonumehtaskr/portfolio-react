@@ -7,10 +7,44 @@ const Contact = () => {
     email: '',
     message: '',
   });
+  const [captchaToken, setCaptchaToken] = useState(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const executeRecaptcha = async () => {
+    if (window.grecaptcha) {
+      const token = await window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SECRET, { action: "submit" });
+      setCaptchaToken(token);
+      return token;
+    } else {
+      console.error("reCAPTCHA not loaded");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+
+    // Execute reCAPTCHA before submitting the form
+    const token = await executeRecaptcha();
+    if (!token) {
+      console.log("reCAPTCHA verification failed.");
+      return;
+    }
+
+    // Submit form data and reCAPTCHA token to your backend
+    const response = await fetch(import.meta.env.VITE_FORM_SUBMISSION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "g-recaptcha-response": token, ...formData }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log("Form submitted successfully!");
+    } else {
+      console.log("Captcha verification failed.");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
