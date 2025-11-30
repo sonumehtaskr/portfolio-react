@@ -1,5 +1,5 @@
 import { Mail, Linkedin, Github, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,47 +7,85 @@ const Contact = () => {
     email: '',
     message: '',
   });
-  const [captchaToken, setCaptchaToken] = useState(null);
+
+  const recaptchaRef = useRef<HTMLDivElement | null>(null);
 
   const executeRecaptcha = async () => {
     if (window.grecaptcha) {
-      const token = await window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SECRET, { action: "submit" });
-      setCaptchaToken(token);
+      const token = await window.grecaptcha.enterprise.execute(import.meta.env.VITE_RECAPTCHA_SECRET, { action: "signup" });
       return token;
     } else {
       console.error("reCAPTCHA not loaded");
     }
   };
 
+  const getRecaptchaToken = () => {
+    const token = window.grecaptcha.enterprise.getResponse(); // Get response from the visible widget
+    if (!token) {
+      console.error('reCAPTCHA verification failed.');
+      return null;
+    }
+    return token;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Execute reCAPTCHA before submitting the form
-    const token = await executeRecaptcha();
+    // Get the reCAPTCHA token from the visible widget
+    const token = getRecaptchaToken();
     if (!token) {
-      console.log("reCAPTCHA verification failed.");
+      console.log('reCAPTCHA verification failed.');
       return;
     }
 
     // Submit form data and reCAPTCHA token to your backend
-    const response = await fetch(import.meta.env.VITE_FORM_SUBMISSION_URL, {
-      method: "POST",
-      redirect: "follow",
-      body: JSON.stringify({ "g-recaptcha-response": token, ...formData }),
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-    });
+    try {
+      const response = await fetch(import.meta.env.VITE_FORM_SUBMISSION_URL, {
+        method: "POST",
+        redirect: "follow",
+        body: JSON.stringify({
+          'g-recaptcha-response': token,
+          ...formData,
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      console.log("Form submitted successfully!");
-    } else {
-      console.log("Captcha verification failed.");
+      if (data.success) {
+        console.log('Form submitted successfully!');
+        // Reset form or show success message here if necessary
+      } else {
+        console.log('Captcha verification failed.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
     }
   };
 
+  useEffect(() => {
+    // Load the reCAPTCHA script on mount
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/enterprise.js?onload=onloadCallback&render=explicit';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    // Callback function when the script is loaded
+    window.onloadCallback = () => {
+      if (window.grecaptcha && recaptchaRef.current) {
+        // Render the visible reCAPTCHA widget
+        window.grecaptcha.enterprise.render(recaptchaRef.current, {
+          sitekey: import.meta.env.VITE_RECAPTCHA_SECRET,
+          action: 'signup', // Optional action name to categorize the request
+        });
+      }
+    };
+
+    return () => {
+      // Clean up the script on unmount
+      document.body.removeChild(script);
+    };
+  }, []);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -168,6 +206,14 @@ const Contact = () => {
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-600 transition-colors resize-none"
                   placeholder="Your message here..."
                 />
+              </div>
+
+              <div data-theme="dark" ref={recaptchaRef} className='w-full'></div>
+
+              <div className='text-white'>
+                This site is protected by reCAPTCHA and the Google
+                <a className='text-blue-600' href="https://policies.google.com/privacy"> Privacy Policy</a> and
+                <a className='text-blue-600' href="https://policies.google.com/terms"> Terms of Service</a> apply.
               </div>
 
               <button
