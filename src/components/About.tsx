@@ -5,22 +5,22 @@ const About = () => {
     {
       icon: Code2,
       title: 'Front-End Expert',
-      description: 'Building responsive and intuitive user interfaces with React and modern CSS',
+      description: 'React.js with Redux Toolkit, Context API, TanStack Query, and Tailwind CSS',
     },
     {
       icon: Server,
       title: 'Back-End Development',
-      description: 'Creating robust server-side applications with Node.js and Express',
+      description: 'Node.js, Express.js, RESTful APIs, JWT, Socket.io, OAuth integration',
     },
     {
       icon: Database,
       title: 'Database Design',
-      description: 'Efficient data modeling and management with MongoDB',
+      description: 'MongoDB with Mongoose ODM, schema design, and query optimization',
     },
     {
       icon: Zap,
-      title: 'Performance Focused',
-      description: 'Optimizing applications for speed and scalability',
+      title: 'Cloud & DevOps',
+      description: 'AWS (EC2, S3), Vercel, Netlify, CI/CD Pipelines',
     },
   ];
 
@@ -35,18 +35,27 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <p className="text-lg text-gray-300 leading-relaxed">
-              I'm a passionate <span className="text-blue-400 font-semibold">MERN Stack Developer</span> with
-              experience in building full-stack web applications. I specialize in creating seamless user
-              experiences and efficient server-side solutions.
+              I'm <span className="text-blue-400 font-semibold">Sonu Kumar</span>, a{' '}
+              <span className="text-blue-400 font-semibold">Full-Stack MERN Developer</span> based in{' '}
+              <span className="text-purple-400">Ludhiana, Punjab</span>. I specialize in building scalable web 
+              applications using MongoDB, Express.js, React.js, and Node.js.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
               Currently working at <span className="text-purple-400 font-semibold">Promatics Technologies Pvt. Ltd.</span>,
-              I've successfully solved <span className="text-blue-400 font-semibold">500+ DSA problems</span> using C++,
-              demonstrating my strong problem-solving skills and collaborative mindset.
+              I develop full-stack applications with advanced state management using{' '}
+              <span className="text-blue-400">Redux Toolkit, Context API, and TanStack Query</span>. I have experience
+              deploying applications on <span className="text-blue-400">AWS, Vercel, and Netlify</span> with CI/CD pipelines.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
-              I'm committed to writing clean, maintainable code and continuously learning new technologies to
-              deliver high-quality, tailored solutions that meet business requirements.
+              With <span className="text-blue-400 font-semibold">500+ DSA problems solved in C++</span>, I bring strong
+              problem-solving and analytical skills to every project. I thrive in{' '}
+              <span className="text-purple-400">Agile/Scrum environments</span>, collaborating with cross-functional teams
+              to deliver high-performance, user-centric solutions.
+            </p>
+            <p className="text-lg text-gray-300 leading-relaxed">
+              I'm proficient in <span className="text-blue-400">JavaScript (ES6+), HTML5, CSS3, SQL</span>, and have
+              expertise in building responsive interfaces, designing RESTful APIs with JWT authentication, and optimizing
+              MongoDB schemas for improved data retrieval efficiency.
             </p>
           </div>
 
